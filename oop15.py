@@ -46,7 +46,6 @@ class Recruiter (Employee, Salary_comparison):
 
 michael = Developer("Michael", 1500)
 print(michael)
-print(michael.check_salary(10))
 
 emma = Recruiter("Emma", 1000)
 print(emma)
