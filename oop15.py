@@ -2,8 +2,10 @@ class Employee:
     def __init__(self, name, salary):
         self.name = name
         self.salary = salary
+
     def work(self):
         return "I come to the office."
+
 
 class Salary_comparison:
         def __init__(self, salary):
