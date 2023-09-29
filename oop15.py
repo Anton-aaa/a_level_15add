@@ -6,6 +6,9 @@ class Employee:
     def work(self):
         return "I come to the office."
 
+    def check_salary(self, days):
+        return (self.salary * days)
+
 
 class Salary_comparison:
         def __init__(self, salary):
@@ -28,7 +31,8 @@ class Developer (Employee, Salary_comparison):
         return "I come to the office and start to coding."
 
     def __str__(self):
-        return f"{self.__class__}:{self.name}"
+        name_class = str(self.__class__)
+        return f"{name_class[17:-2]}:{self.name}"
 
 
 class Recruiter (Employee, Salary_comparison):
@@ -36,13 +40,14 @@ class Recruiter (Employee, Salary_comparison):
         return "I come to the office and start to hiring."
 
     def __str__(self):
-        return f"{self.__class__}:{self.name}"
+        name_class = str(self.__class__)
+        return f"{name_class[17:-2]}:{self.name}"
 
 
 michael = Developer("Michael", 1500)
 print(michael)
+print(michael.check_salary(10))
 
 emma = Recruiter("Emma", 1000)
 print(emma)
 
-print(michael.salary < emma.salary)
