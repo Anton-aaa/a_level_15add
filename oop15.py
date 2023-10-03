@@ -24,27 +24,19 @@ class Employee:
 
 class Developer(Employee):
     def __init__(self, name, salary, *tech_stack):
-        self.tech_stack = tuple(tech_stack)
         super().__init__(name, salary)
+        self.tech_stack = tuple(tech_stack)
 
     def work(self):
         return "I come to the office and start to coding."
 
     def __str__(self):
-        name_class = str(self.__class__)
-        return f"{name_class[17:-2]}:{self.name}"
+        return self.__class__.__name__
 
-class Create(Developer):
-    def __new__(cls, obj_1, obj_2, **kwargs):
-        return super().__new__(cls)
-
-    def __init__(self, obj_1, obj_2):
-        self.name = str(obj_1.name + " " + obj_2.name)
-        self.tech_stack = set(obj_1.tech_stack + obj_2.tech_stack)
-        if obj_1.salary <= obj_2.salary:
-            self.salary = obj_2.salary
-        else:
-            self.salary = obj_1.salary
+    def __add__(self, other):
+        return (self.name + " " + other.name,
+                set(self.tech_stack + other.tech_stack),
+                max(self.salary, other.salary))
 
 
 class Recruiter(Employee):
@@ -52,8 +44,7 @@ class Recruiter(Employee):
         return "I come to the office and start to hiring."
 
     def __str__(self):
-        name_class = str(self.__class__)
-        return f"{name_class[17:-2]}:{self.name}"
+        return self.__class__.__name__
 
 
 michael = Developer("Michael",1500, "Java", "JS", "C++")
@@ -69,7 +60,7 @@ emma = Recruiter("Emma", 1000)
 print(emma)
 print("Salary calculation Emma in 10 days =", emma.check_salary(10))
 
-verification_create_object = Create( michael, alisa)
-print("Name new object",verification_create_object.name)
-print("Salary new object", verification_create_object.salary)
-print("Tech stack new object", verification_create_object.tech_stack)
+developer_sum = michael + alisa
+print("Sum developer1 and developer2", developer_sum)
+
+
