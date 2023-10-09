@@ -67,6 +67,41 @@ class Recruiter(Employee):
     def __str__(self):
         return self.__class__.__name__
 
+class Candidate:
+    def __init__(self,
+                 first_name,
+                 last_name,
+                 email,
+                 tech_stack,
+                 main_skill,
+                 main_skill_grade):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.tech_stack = tech_stack
+        self.main_skill = main_skill
+        self.main_skill_grade = main_skill_grade
+
+    def property(self):
+        return self.first_name + " " + self.last_name
+
+class NewCandidates:
+    def __init__(self, file_location):
+        self.file_location = file_location
+        self.generate_candidates()
+    def generate_candidates(self):
+        candidates = []
+        _counter = 0 #used to skip the first line in a file
+        with open(self.file_location) as f:
+            for line in f:
+                if _counter == 0:
+                    _counter = 1
+                    continue
+                incision = line.split(";")
+                incision_name = incision[0].split() + incision[1:]
+                candidates.append(Candidate(*incision_name))
+        return candidates
+
 
 michael = Developer("Michael",1500,"1", ("Java", "JS", "C++"))
 print(michael)
@@ -89,3 +124,12 @@ print(
     developer_sum.tech_stack,
     developer_sum.email
 )
+
+corni_grant = Candidate("Corni",
+                        "Grant",
+                        "corni@gmeil.com",
+                        ("Go", "Lisp", "Java"),
+                        "Java",
+                        "Senior")
+
+candidates = NewCandidates("candidates.csv")
