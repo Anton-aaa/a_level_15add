@@ -6,8 +6,7 @@ class Employee:
     def __init__(self, name, salary, email):
         self.name = name
         self.salary = salary
-        self.email = email
-        self.save_email()
+        self.email = self.save_email(email)
 
     def work(self):
         return "I come to the office."
@@ -27,18 +26,22 @@ class Employee:
     def __le__(self, other):
         return self.salary <= other.salary
 
-    def save_email(self):
+    def save_email(self, email):
         try:
-            self.validate()
+            self.validate(email)
+            self.email = email
             with open("emails.csv", "a") as f:
-                f.write(f"{self.email} \n")
+                f.write(f"{email} \n")
         except EmailAlreadyExistsException:
             print("ERROR. The email is already recorded in the file")
-    def validate (self):
+        return email
+
+    def validate (self, email):
         with open("emails.csv") as f:
             for line in f:
-                if self.email in line:
+                if email in line:
                     raise EmailAlreadyExistsException
+
 
 class Developer(Employee):
     def __init__(self, name, salary, email, tech_stack):
@@ -57,8 +60,8 @@ class Developer(Employee):
             max(self.salary, other.salary),
             self.email + other.email,
             set(self.tech_stack + other.tech_stack),
-
         )
+
 
 class Recruiter(Employee):
     def work(self):
@@ -67,6 +70,7 @@ class Recruiter(Employee):
     def __str__(self):
         return self.__class__.__name__
 
+
 class Candidate:
     def __init__(self,
                  first_name,
@@ -74,7 +78,8 @@ class Candidate:
                  email,
                  tech_stack,
                  main_skill,
-                 main_skill_grade):
+                 main_skill_grade
+                 ):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -82,26 +87,24 @@ class Candidate:
         self.main_skill = main_skill
         self.main_skill_grade = main_skill_grade
 
-    def property(self):
+    def __str__(self):
+        return self.main_skill_grade
+
+    @property
+    def full_name(self):
         return self.first_name + " " + self.last_name
 
-class NewCandidates:
-    def __init__(self, file_location):
-        self.file_location = file_location
-        self.generate_candidates()
-    def generate_candidates(self):
+    @classmethod
+    def generate_candidates(cls, file_location):
         candidates = []
-        _counter = 0 #used to skip the first line in a file
-        with open(self.file_location) as f:
-            for line in f:
-                if _counter == 0:
-                    _counter = 1
+        with open(file_location) as f:
+            for index, line in enumerate(f):
+                if index == 0:
                     continue
                 incision = line.split(";")
                 incision_name = incision[0].split() + incision[1:]
-                candidates.append(Candidate(*incision_name))
-        return candidates
-
+                candidates.append(Developer(incision_name))
+            return candidates
 
 michael = Developer("Michael",1500,"1", ("Java", "JS", "C++"))
 print(michael)
@@ -130,6 +133,8 @@ corni_grant = Candidate("Corni",
                         "corni@gmeil.com",
                         ("Go", "Lisp", "Java"),
                         "Java",
-                        "Senior")
+                        "Senior"
+                        )
+print(corni_grant.full_name)
 
-candidates = NewCandidates("candidates.csv")
+candidates = Candidate.generate_candidates("candidates.csv")
