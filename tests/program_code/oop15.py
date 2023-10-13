@@ -106,35 +106,37 @@ class Candidate:
                 candidates.append(Candidate(*incision_name))
             return candidates
 
-michael = Developer("Michael",1500,"1", ("Java", "JS", "C++"))
-print(michael)
-print("Salary calculation Michael in 10 days =", michael.check_salary(10))
-print("Michael tech stack:", michael.tech_stack)
 
-alisa = Developer("Alisa", 2000, "gmail", ("PHP", "Java"))
-print("Salary Alisa less salary Michael:", alisa.salary < michael.salary)
-print("Quantity tech stack Alisa less tech stack Michael:",
-      len(alisa.tech_stack) < len(michael.tech_stack))
+if __name__ == "__main__":
+    michael = Developer("Michael",1500,"1", ("Java", "JS", "C++"))
+    print(michael)
+    print("Salary calculation Michael in 10 days =", michael.check_salary(10))
+    print("Michael tech stack:", michael.tech_stack)
 
-emma = Recruiter("Emma",   1000, "ukrmail")
-print(emma)
-print("Salary calculation Emma in 10 days =", emma.check_salary(10))
+    alisa = Developer("Alisa", 2000, "gmail", ("PHP", "Java"))
+    print("Salary Alisa less salary Michael:", alisa.salary < michael.salary)
+    print("Quantity tech stack Alisa less tech stack Michael:",
+          len(alisa.tech_stack) < len(michael.tech_stack))
 
-developer_sum = michael + alisa
-print(
-    developer_sum.name,
-    developer_sum.salary,
-    developer_sum.tech_stack,
-    developer_sum.email
-)
+    emma = Recruiter("Emma",   1000, "ukrmail")
+    print(emma)
+    print("Salary calculation Emma in 10 days =", emma.check_salary(10))
 
-corni_grant = Candidate("Corni",
-                        "Grant",
-                        "corni@gmeil.com",
-                        ("Go", "Lisp", "Java"),
-                        "Java",
-                        "Senior"
-                        )
-print(corni_grant.full_name)
+    developer_sum = michael + alisa
+    print(
+        developer_sum.name,
+        developer_sum.salary,
+        developer_sum.tech_stack,
+        developer_sum.email
+    )
 
-candidates = Candidate.generate_candidates("candidates.csv")
+    corni_grant = Candidate("Corni",
+                            "Grant",
+                            "corni@gmeil.com",
+                            ("Go", "Lisp", "Java"),
+                            "Java",
+                            "Senior"
+                            )
+    print(corni_grant.full_name)
+
+    candidates = Candidate.generate_candidates("candidates.csv")
