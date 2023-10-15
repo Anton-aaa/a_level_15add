@@ -9,7 +9,7 @@ class Employee:
     def __init__(self, name, salary, email):
         self.name = name
         self.salary = salary
-        self.email = self.save_email(email)
+        self.email = email
 
     def work(self):
         return "I come to the office."
@@ -29,20 +29,18 @@ class Employee:
     def __le__(self, other):
         return self.salary <= other.salary
 
-    def save_email(self, email):
+    def save_email(self):
         try:
-            self.validate(email)
-            self.email = email
+            self.validate(self.email)
             with open("emails.csv", "a") as f:
-                f.write(f"{email} \n")
+                f.write(f"{self.email} \n")
         except EmailAlreadyExistsException:
             print("ERROR. The email is already recorded in the file")
-        return email
 
-    def validate(self, email):
+    def validate(self):
         with open("emails.csv") as f:
             for line in f:
-                if email in line:
+                if self.email in line:
                     raise EmailAlreadyExistsException
 
 
@@ -58,11 +56,13 @@ class Developer(Employee):
         return self.__class__.__name__
 
     def __add__(self, other):
+        stack1 = set(self.tech_stack)
+        stack2 = set(other.tech_stack)
         return Developer(
             self.name + " " + other.name,
             max(self.salary, other.salary),
             self.email + other.email,
-            set(self.tech_stack + other.tech_stack),
+            str(stack1 | stack2),
         )
 
 

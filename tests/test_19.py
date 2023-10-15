@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 m = Mock()
 class EmployeeTest(TestCase):
     def setUp(self):
-        with patch.object("program_code.oop15.Employee.self.email", return_value=email):
+        with patch("program_code.oop15.Employee.save_email"):
             self.employee = Employee("Piter", 1000, "a")
             self.other_employee = Employee("Anri", 2000, "b")
 
@@ -29,10 +29,10 @@ class EmployeeTest(TestCase):
         self.assertTrue(self.employee.__le__(self.other_employee))
 
 class DeveloperTest(TestCase):
-    @patch('program_code.oop15.Employee.save_email', return_value="email")
+    @patch('program_code.oop15.Employee.save_email')
     def setUp(self, mock_class):
-        self.developer = Developer("Name", 1000, "email", "techStack")
-        self.other_developer = Developer("Lesi", 1500, "email_2", "Java")
+        self.developer = Developer("Michael", 1500, "1", ("Java", "JS", "C++"))
+        self.other_developer = Developer("Alisa", 2000, "gmail", ("PHP", "Java"))
 
     def test_work(self):
         self.assertEqual(self.developer.work(), "I come to the office and start to coding.")
@@ -40,13 +40,22 @@ class DeveloperTest(TestCase):
     def test_str(self):
         self.assertEqual(self.developer.__str__(), "Developer")
 
-    @patch('program_code.oop15.Employee.save_email', return_value="email")
-    def test_add(self, mock_class):
-        self.assertEqual(self.other_developer.__add__(self.developer),
-            Developer(self.other_developer.name + " " + self.developer.name,
-            max(self.other_developer.salary, self.developer.salary),
-            self.other_developer.email + self.developer.email,
-            set(self.other_developer.tech_stack + self.developer.tech_stack)))
+    def test_add(self):
+        new_obj = Developer(
+            self.developer.name + " " + self.other_developer.name,
+            max(self.developer.salary, self.other_developer.salary),
+            self.developer.email + " " + self.other_developer.email,
+            self.developer.tech_stack + self.other_developer.tech_stack)
+        expected = Developer(
+        "Michael Alisa",
+            2000,
+            "1 gmail",
+            ("Java", "JS", "C++", "PHP", "Java"))
+
+        self.assertEqual(new_obj.name, expected.name)
+        self.assertEqual(new_obj.salary, expected.salary)
+        self.assertEqual(new_obj.email, expected.email)
+        self.assertEqual(new_obj.tech_stack, expected.tech_stack)
 
 
 class RecruiterTest(TestCase):
