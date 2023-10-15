@@ -1,7 +1,10 @@
 import csv
 
+
 class EmailAlreadyExistsException(Exception):
     pass
+
+
 class Employee:
     def __init__(self, name, salary, email):
         self.name = name
@@ -36,7 +39,7 @@ class Employee:
             print("ERROR. The email is already recorded in the file")
         return email
 
-    def validate (self, email):
+    def validate(self, email):
         with open("emails.csv") as f:
             for line in f:
                 if email in line:
@@ -108,7 +111,7 @@ class Candidate:
 
 
 if __name__ == "__main__":
-    michael = Developer("Michael",1500,"1", ("Java", "JS", "C++"))
+    michael = Developer("Michael", 1500, "1", ("Java", "JS", "C++"))
     print(michael)
     print("Salary calculation Michael in 10 days =", michael.check_salary(10))
     print("Michael tech stack:", michael.tech_stack)
@@ -118,7 +121,7 @@ if __name__ == "__main__":
     print("Quantity tech stack Alisa less tech stack Michael:",
           len(alisa.tech_stack) < len(michael.tech_stack))
 
-    emma = Recruiter("Emma",   1000, "ukrmail")
+    emma = Recruiter("Emma", 1000, "ukrmail")
     print(emma)
     print("Salary calculation Emma in 10 days =", emma.check_salary(10))
 
