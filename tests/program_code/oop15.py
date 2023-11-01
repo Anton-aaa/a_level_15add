@@ -1,5 +1,5 @@
 import csv
-
+from datetime import datetime
 
 class EmailAlreadyExistsException(Exception):
     pass
@@ -36,6 +36,8 @@ class Employee:
                 f.write(f"{self.email} \n")
         except EmailAlreadyExistsException:
             print("ERROR. The email is already recorded in the file")
+            return EmailAlreadyExistsException
+
 
     def validate(self):
         with open("emails.csv") as f:
@@ -110,6 +112,21 @@ class Candidate:
             return candidates
 
 
+class Writer:
+    def write(self, text):
+        with open ("some_text.txt", "a") as f:
+            f.write(f"{text}\n")
+
+class Loger:
+    def wtite(self, obj):
+        now = datetime.now
+        now_format = now.strftime("%d/%m/%Y %H:%M:%S")
+        text_error = f"{now_format}"
+
+
+
+
+
 if __name__ == "__main__":
     michael = Developer("Michael", 1500, "1", ("Java", "JS", "C++"))
     print(michael)
@@ -143,3 +160,9 @@ if __name__ == "__main__":
     print(corni_grant.full_name)
 
     candidates = Candidate.generate_candidates("candidates.csv")
+
+    w = Writer()
+    w.write(2)
+
+    now = datetime.now()
+    print(now.strftime("%d/%m/%Y %H:%M:%S"))

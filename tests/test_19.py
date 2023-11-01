@@ -17,16 +17,16 @@ class EmployeeTest(TestCase):
         self.assertEqual(self.employee.check_salary(10), 10000)
 
     def test_gt(self):
-        self.assertFalse(self.employee.__gt__(self.other_employee))
+        self.assertFalse(self.employee > self.other_employee)
 
     def test_lt(self):
-        self.assertTrue(self.employee.__lt__(self.other_employee))
+        self.assertTrue(self.employee < self.other_employee)
 
     def test_ge(self):
-        self.assertFalse(self.employee.__ge__(self.other_employee))
+        self.assertFalse(self.employee >= self.other_employee)
 
     def test_le(self):
-        self.assertTrue(self.employee.__le__(self.other_employee))
+        self.assertTrue(self.employee <= self.other_employee)
 
 class DeveloperTest(TestCase):
     @patch('program_code.oop15.Employee.save_email')
