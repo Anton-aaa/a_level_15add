@@ -3,6 +3,19 @@ from program_code.oop15 import Employee, Developer, Recruiter, Candidate
 from unittest.mock import Mock, patch
 
 m = Mock()
+
+# class Writer(TestCase):
+#     @patch('program_code.oop15.Writer.write', return_value = False)
+#     def write(self):
+#         self.writer = Writer()
+#         self.assertEqual(self.Writer.write(self, 1), False)
+#
+# class Loger(TestCase):
+#     @patch('program_code.oop15.Loger.write', return_value = False)
+#     def write(self):
+#         self.writer = Loger()
+#         self.assertEqual(self.Loger.write(self, 1), False)
+
 class EmployeeTest(TestCase):
     def setUp(self):
         with patch("program_code.oop15.Employee.save_email"):
@@ -83,4 +96,3 @@ class CandidateTest(TestCase):
 
     def test_full_name(self):
         self.assertEqual(self.candidate.full_name, self.candidate.first_name + " " + self.candidate.last_name)
-

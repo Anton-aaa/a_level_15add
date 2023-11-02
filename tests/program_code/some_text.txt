@@ -1,11 +1,10 @@
-2
-2
-2
-2
-2
-2
-2
-2
-2
-2
-2
+1 02/11/2023 16:31:44 <function loger_decorator.<locals>.write_error at 0x000002975A916F20>
+2 02/11/2023 16:43:15 <function loger_decorator.<locals>.write_error at 0x0000023C51F86F20>
+3 02/11/2023 16:43:35 <function loger_decorator.<locals>.write_error at 0x000001B384F26F20>
+4 02/11/2023 16:43:51 <function loger_decorator.<locals>.write_error at 0x00000171E3A46F20>
+5 02/11/2023 16:49:27 <function loger_decorator.<locals>.write_error at 0x0000020E33136F20>
+6 02/11/2023 16:50:21 <function loger_decorator.<locals>.write_error at 0x000002A048AE6F20>
+7 02/11/2023 16:52:41 <function loger_decorator.<locals>.write_error at 0x0000021776A56F20>
+8 02/11/2023 16:55:57 <function loger_decorator.<locals>.write_error at 0x000002C3CCD26F20>
+9 02/11/2023 17:08:44 <function loger_decorator.<locals>.write_error at 0x000002451FDE6F20>
+10 02/11/2023 17:12:06 <function loger_decorator.<locals>.write_error at 0x0000028CF3086F20>

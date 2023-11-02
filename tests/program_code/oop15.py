@@ -1,5 +1,36 @@
 import csv
+import traceback
 from datetime import datetime
+
+
+class Writer:
+    def write(self, text):
+        with open ("some_text.txt", "a") as f:
+            f.write(f"{text}\n")
+
+class Loger:
+    def write(self, obj):
+        number = 1
+        with open("some_text.txt", "r") as f:
+            for line in f:
+                number += 1
+        now = datetime.now()
+        final = f"{number} {now.strftime('%d/%m/%Y %H:%M:%S')} {obj}"
+        writer = Writer()
+        writer.write(final)
+
+def loger_decorator(function):
+    def write_error(self):
+        return function(self)
+
+    error_register = Loger()
+    error_register.write(write_error)
+    return write_error
+
+
+
+
+
 
 class EmailAlreadyExistsException(Exception):
     pass
@@ -29,14 +60,17 @@ class Employee:
     def __le__(self, other):
         return self.salary <= other.salary
 
+
+    @loger_decorator
     def save_email(self):
         try:
-            self.validate(self.email)
+            self.validate()
             with open("emails.csv", "a") as f:
                 f.write(f"{self.email} \n")
-        except EmailAlreadyExistsException:
+        except EmailAlreadyExistsException as e:
+
             print("ERROR. The email is already recorded in the file")
-            return EmailAlreadyExistsException
+            return traceback.format_exc()
 
 
     def validate(self):
@@ -112,28 +146,16 @@ class Candidate:
             return candidates
 
 
-class Writer:
-    def write(self, text):
-        with open ("some_text.txt", "a") as f:
-            f.write(f"{text}\n")
-
-class Loger:
-    def wtite(self, obj):
-        now = datetime.now
-        now_format = now.strftime("%d/%m/%Y %H:%M:%S")
-        text_error = f"{now_format}"
-
-
-
-
 
 if __name__ == "__main__":
     michael = Developer("Michael", 1500, "1", ("Java", "JS", "C++"))
+    michael.save_email()
     print(michael)
     print("Salary calculation Michael in 10 days =", michael.check_salary(10))
     print("Michael tech stack:", michael.tech_stack)
 
     alisa = Developer("Alisa", 2000, "gmail", ("PHP", "Java"))
+    alisa.save_email()
     print("Salary Alisa less salary Michael:", alisa.salary < michael.salary)
     print("Quantity tech stack Alisa less tech stack Michael:",
           len(alisa.tech_stack) < len(michael.tech_stack))
@@ -161,8 +183,4 @@ if __name__ == "__main__":
 
     candidates = Candidate.generate_candidates("candidates.csv")
 
-    w = Writer()
-    w.write(2)
 
-    now = datetime.now()
-    print(now.strftime("%d/%m/%Y %H:%M:%S"))
